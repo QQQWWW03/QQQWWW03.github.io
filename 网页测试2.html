@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+    <title>🐮 职场动物人格测试 · 趣味版</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', system-ui, sans-serif;
+        }
+        body {
+            background: linear-gradient(145deg, #e1f0da 0%, #c8e6c9 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+        }
+        .test-card {
+            max-width: 900px;
+            width: 100%;
+            background: rgba(230, 245, 220, 0.9);
+            backdrop-filter: blur(6px);
+            border-radius: 48px 48px 40px 40px;
+            box-shadow: 0 25px 40px -10px rgba(60, 100, 50, 0.3), 0 10px 20px -5px rgba(0,0,0,0.1);
+            padding: 2.5rem 2rem;
+            border: 2px solid #c5e0b4;
+            transition: all 0.2s;
+        }
+        h1 {
+            font-size: 2.6rem;
+            font-weight: 700;
+            color: #2d5e3b;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 0.3rem;
+            flex-wrap: wrap;
+        }
+        h1 span {
+            background: #b8d9a6;
+            font-size: 1.8rem;
+            padding: 0.3rem 1.2rem;
+            border-radius: 60px;
+            color: #1f4a2c;
+            font-weight: 500;
+            border: 1px solid #9cc09c;
+        }
+        .subhead {
+            font-size: 1.2rem;
+            color: #2d6a4f;
+            margin-bottom: 2rem;
+            padding-left: 0.5rem;
+            border-left: 7px solid #7fb07f;
+            background: linear-gradient(to right, #e6f4e0, transparent);
+            padding: 0.7rem 1rem;
+            border-radius: 0 50px 50px 0;
+            line-height: 1.5;
+        }
+        /* 封面样式 */
+        .cover {
+            text-align: center;
+            padding: 1rem 1rem 2rem;
+        }
+        .animal-row {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            filter: drop-shadow(0 6px 8px rgba(60, 100, 20, 0.2));
+        }
+        .animal-row span {
+            transition: transform 0.2s;
+            display: inline-block;
+        }
+        .animal-row span:hover {
+            transform: scale(1.2) rotate(5deg);
+        }
+        .cover .subhead {
+            text-align: left;
+            margin: 2rem 0 3rem;
+        }
+        .cover .btn-start {
+            background: #2d6a4f;
+            color: #f0ffe0;
+            border: none;
+            padding: 1.2rem 3.5rem;
+            font-size: 1.8rem;
+            font-weight: 600;
+            border-radius: 60px;
+            cursor: pointer;
+            box-shadow: 0 12px 20px -8px #1e4d38;
+            transition: 0.15s;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 1rem;
+        }
+        .cover .btn-start:hover {
+            background: #1f4a2c;
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -8px #1a3e26;
+        }
+        /* 测试内容区域 (初始隐藏) */
+        .test-content {
+            display: none;
+        }
+        .quiz-section {
+            margin: 1.8rem 0 1rem;
+        }
+        .question-item {
+            background: #ffffffd6;
+            border-radius: 32px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 1.2rem;
+            box-shadow: 0 8px 12px -6px #b8cfaa;
+            border: 1px solid #d4e8c0;
+            transition: 0.15s;
+        }
+        .question-item:hover {
+            border-color: #8fc98f;
+            background: #fffffff2;
+        }
+        .q-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2d5e3b;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .q-title .q-num {
+            background: #6b9e6b;
+            color: white;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 1rem;
+            font-weight: 500;
+            margin-right: 8px;
+        }
+        .options-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem 2.5rem;
+            justify-content: flex-start;
+        }
+        .option-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            color: #1f4a2c;
+            background: #f0fae8;
+            padding: 0.5rem 1.2rem 0.5rem 0.8rem;
+            border-radius: 40px;
+            border: 1px solid #b8daa8;
+            transition: all 0.1s;
+        }
+        .option-item:hover {
+            background: #e0f0d0;
+            border-color: #6b9e6b;
+            transform: scale(1.02);
+        }
+        .option-item input[type="radio"] {
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            border: 2px solid #5e8b5e;
+            border-radius: 50%;
+            margin-right: 4px;
+            position: relative;
+            cursor: pointer;
+            background: white;
+        }
+        .option-item input[type="radio"]:checked {
+            background: #2d6a4f;
+            border-color: #1e4d38;
+            box-shadow: inset 0 0 0 5px white;
+        }
+        .animal-icon {
+            font-size: 1.4rem;
+            line-height: 1;
+            filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.1));
+        }
+        .action-bar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.2rem;
+            margin: 2.5rem 0 2rem;
+        }
+        .btn {
+            border: none;
+            background: white;
+            padding: 1rem 2.8rem;
+            font-size: 1.4rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 12px -6px #7c9e7c;
+            transition: 0.12s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            border: 2px solid transparent;
+            min-width: 200px;
+        }
+        .btn-primary {
+            background: #2d6a4f;
+            color: #f0ffe0;
+            border-color: #1e4d38;
+        }
+        .btn-primary:hover {
+            background: #1f4a2c;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 20px -8px #1e4d38;
+        }
+        .btn-secondary {
+            background: #e0efd5;
+            color: #1f4a2c;
+            border-color: #9cc09c;
+        }
+        .btn-secondary:hover {
+            background: #d0e3c0;
+            transform: translateY(-2px);
+        }
+        .result-panel {
+            background: #e8f2e0f0;
+            border-radius: 50px 50px 30px 30px;
+            padding: 1.8rem 2.2rem;
+            margin-top: 2rem;
+            border: 2px solid #b8daa8;
+            backdrop-filter: blur(2px);
+        }
+        .result-title {
+            font-size: 1.7rem;
+            font-weight: 600;
+            color: #1f4a2c;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1.2rem;
+        }
+        .result-content {
+            font-size: 1.25rem;
+            line-height: 1.5;
+            color: #1d3b25;
+            background: #f7fff0;
+            border-radius: 36px;
+            padding: 2rem 2rem;
+            border: 1px solid #c0ddb0;
+            min-height: 120px;
+        }
+        .animal-badge {
+            display: inline-block;
+            background: #5e8b5e;
+            color: white;
+            padding: 0.4rem 1.4rem;
+            border-radius: 40px;
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            box-shadow: 0 5px 0 #2d5e3b;
+        }
+        .score-detail {
+            margin-top: 20px;
+            font-size: 1rem;
+            color: #2d5e3b;
+            background: #dcebd0;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: space-around;
+        }
+        .score-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        /* 移除脚注 */
+        .footnote {
+            display: none;
+        }
+        .reset-icon, .test-icon {
+            font-size: 1.6rem;
+        }
+        @media (max-width: 600px) {
+            .test-card { padding: 1.8rem 1rem; }
+            h1 { font-size: 2rem; }
+            .options-grid { gap: 0.8rem; }
+            .option-item { width: 100%; }
+            .btn { width: 100%; }
+            .cover .btn-start { font-size: 1.5rem; padding: 1rem 2rem; }
+            .animal-row { gap: 1rem; font-size: 2.8rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="test-card">
+    <!-- 封面区域 (初始显示) -->
+    <div class="cover" id="cover">
+        <div class="animal-row">
+            <span>🐮</span>
+            <span>🦁</span>
+            <span>🦊</span>
+            <span>🦉</span>
+            <span>🐨</span>
+            <span>🐧</span>
+        </div>
+        <h1>
+            🐾 职场动物人格测试
+            <span>趣味版</span>
+        </h1>
+        <div class="subhead">
+            🐮 你是踏实肯干的老黄牛？自信领导力强的狮子？还是机智灵活的狐狸？<br>通过回答5道简单的职场情景题，了解你的职场动物人格！
+        </div>
+        <button class="btn-start" id="startBtn">
+            <span class="test-icon">🔍</span> 开始测试
+        </button>
+    </div>
+
+    <!-- 测试内容区域 (初始隐藏) -->
+    <div class="test-content" id="testContent">
+        <!-- 问卷区 (5道题) -->
+        <div class="quiz-section" id="quizSection">
+            <!-- 问题1 -->
+            <div class="question-item">
+                <div class="q-title"><span class="q-num">1</span> 接到一项繁琐耗时的工作，你的第一反应是？</div>
+                <div class="options-grid">
+                    <label class="option-item"><input type="radio" name="q1" value="ox"> <span class="animal-icon">🐮</span> 埋头苦干，踏实完成</label>
+                    <label class="option-item"><input type="radio" name="q1" value="lion"> <span class="animal-icon">🦁</span> 统筹分工，提高效率</label>
+                    <label class="option-item"><input type="radio" name="q1" value="fox"> <span class="animal-icon">🦊</span> 找捷径或新方法简化流程</label>
+                    <label class="option-item"><input type="radio" name="q1" value="owl"> <span class="animal-icon">🦉</span> 先制定详细计划再动手</label>
+                </div>
+            </div>
+            <!-- 问题2 -->
+            <div class="question-item">
+                <div class="q-title"><span class="q-num">2</span> 团队讨论陷入僵局时，你通常会？</div>
+                <div class="options-grid">
+                    <label class="option-item"><input type="radio" name="q2" value="ox"> <span class="animal-icon">🐮</span> 默默记录大家观点，等待指示</label>
+                    <label class="option-item"><input type="radio" name="q2" value="lion"> <span class="animal-icon">🦁</span> 主动拍板，引导方向</label>
+                    <label class="option-item"><input type="radio" name="q2" value="fox"> <span class="animal-icon">🦊</span> 提出折中或创意的解决方案</label>
+                    <label class="option-item"><input type="radio" name="q2" value="owl"> <span class="animal-icon">🦉</span> 梳理矛盾点，用逻辑分析</label>
+                </div>
+            </div>
+            <!-- 问题3 -->
+            <div class="question-item">
+                <div class="q-title"><span class="q-num">3</span> 同事需要你帮忙，但你手头工作也很紧，你会？</div>
+                <div class="options-grid">
+                    <label class="option-item"><input type="radio" name="q3" value="ox"> <span class="animal-icon">🐮</span> 尽量挤出时间帮助，哪怕加班</label>
+                    <label class="option-item"><input type="radio" name="q3" value="lion"> <span class="animal-icon">🦁</span> 权衡优先级，再决定是否帮忙</label>
+                    <label class="option-item"><input type="radio" name="q3" value="fox"> <span class="animal-icon">🦊</span> 教他快速搞定，或用资源置换</label>
+                    <label class="option-item"><input type="radio" name="q3" value="owl"> <span class="animal-icon">🦉</span> 分析他的问题，提供系统建议</label>
+                </div>
+            </div>
+            <!-- 问题4 -->
+            <div class="question-item">
+                <div class="q-title"><span class="q-num">4</span> 你最欣赏的职场评价是？</div>
+                <div class="options-grid">
+                    <label class="option-item"><input type="radio" name="q4" value="ox"> <span class="animal-icon">🐮</span> “靠谱，交给ta放心”</label>
+                    <label class="option-item"><input type="radio" name="q4" value="lion"> <span class="animal-icon">🦁</span> “有魄力，能带团队”</label>
+                    <label class="option-item"><input type="radio" name="q4" value="fox"> <span class="animal-icon">🦊</span> “机灵，总能想到新点子”</label>
+                    <label class="option-item"><input type="radio" name="q4" value="owl"> <span class="animal-icon">🦉</span> “严谨，逻辑清晰”</label>
+                </div>
+            </div>
+            <!-- 问题5 -->
+            <div class="question-item">
+                <div class="q-title"><span class="q-num">5</span> 面对新工具或新流程，你通常？</div>
+                <div class="options-grid">
+                    <label class="option-item"><input type="radio" name="q5" value="ox"> <span class="animal-icon">🐮</span> 按培训步骤慢慢适应</label>
+                    <label class="option-item"><input type="radio" name="q5" value="lion"> <span class="animal-icon">🦁</span> 要求团队快速落地执行</label>
+                    <label class="option-item"><input type="radio" name="q5" value="fox"> <span class="animal-icon">🦊</span> 先摸索有没有更巧的用法</label>
+                    <label class="option-item"><input type="radio" name="q5" value="owl"> <span class="animal-icon">🦉</span> 研究原理，形成操作手册</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- 操作按钮组 -->
+        <div class="action-bar">
+            <button class="btn btn-primary" id="testBtn"><span class="test-icon">🔍</span> 查看结果</button>
+            <button class="btn btn-secondary" id="resetBtn"><span class="reset-icon">🔄</span> 重新选择</button>
+        </div>
+
+        <!-- 结果展示区 -->
+        <div class="result-panel" id="resultPanel">
+            <div class="result-title">
+                <span>📋 你的职场人格诊断</span>
+            </div>
+            <div class="result-content" id="resultContent">
+                🐾 完成5道题，点击“查看结果”看看你是哪种职场动物～
+            </div>
+        </div>
+    </div>
+
+    <!-- 脚注已移除 -->
+</div>
+
+<script>
+    (function() {
+        // 动物资料库
+        const animalData = {
+            ox: {
+                name: '老黄牛',
+                emoji: '🐮',
+                description: '踏实肯干的实干家，任劳任怨，是团队里最靠谱的基石。你总能稳定输出，让同事感到安心。'
+            },
+            lion: {
+                name: '狮子',
+                emoji: '🦁',
+                description: '天生的领导者，果断自信，喜欢掌控全局。在团队中你总是那个站出来指明方向的人，有你在大家就很安心。'
+            },
+            fox: {
+                name: '狐狸',
+                emoji: '🦊',
+                description: '足智多谋的智多星，随机应变，总能用新奇的点子解决问题。你适合需要创新的岗位，但偶尔要记得落地执行。'
+            },
+            owl: {
+                name: '猫头鹰',
+                emoji: '🦉',
+                description: '严谨的分析家，凡事讲求数据和逻辑。你做事周密靠谱，是团队里最让人信赖的“纠错机”和“知识库”。'
+            }
+        };
+
+        const cover = document.getElementById('cover');
+        const testContent = document.getElementById('testContent');
+        const startBtn = document.getElementById('startBtn');
+        const testBtn = document.getElementById('testBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const resultContentDiv = document.getElementById('resultContent');
+
+        // 点击开始测试：隐藏封面，显示测试内容，并重置所有选项到初始状态
+        startBtn.addEventListener('click', function() {
+            cover.style.display = 'none';
+            testContent.style.display = 'block';
+            resetTest(); // 重置题目和结果，确保全新开始
+        });
+
+        // 检查所有5道题是否已选
+        function allQuestionsAnswered() {
+            for (let i = 1; i <= 5; i++) {
+                const radios = document.getElementsByName('q' + i);
+                let checkedOne = Array.from(radios).some(radio => radio.checked);
+                if (!checkedOne) return false;
+            }
+            return true;
+        }
+
+        // 计算得分并返回动物对象数组
+        function calculateTopAnimals() {
+            const scores = { ox: 0, lion: 0, fox: 0, owl: 0 };
+            for (let i = 1; i <= 5; i++) {
+                const radios = document.getElementsByName('q' + i);
+                const selected = Array.from(radios).find(radio => radio.checked);
+                if (selected) {
+                    scores[selected.value] += 1;
+                }
+            }
+            const maxScore = Math.max(...Object.values(scores));
+            const topAnimals = Object.keys(scores).filter(animal => scores[animal] === maxScore);
+            return { topAnimals, scores };
+        }
+
+        // 展示结果
+        function displayResult() {
+            if (!allQuestionsAnswered()) {
+                alert('🐾 别急～请先把所有题目答完再查看结果哟！');
+                return;
+            }
+
+            const { topAnimals, scores } = calculateTopAnimals();
+
+            let html = '<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 15px;">';
+            topAnimals.forEach((animalKey, index) => {
+                const animal = animalData[animalKey];
+                html += `<span class="animal-badge">${animal.emoji} ${animal.name}</span>`;
+                if (index < topAnimals.length - 1) html += '<span style="font-size:2rem; color:#5e8b5e;">&</span>';
+            });
+            html += '</div>';
+
+            if (topAnimals.length === 1) {
+                const single = animalData[topAnimals[0]];
+                html += `<div style="font-size:1.3rem; margin:10px 0 15px;">✨ ${single.description}</div>`;
+            } else {
+                html += '<div style="font-size:1.2rem; margin:10px 0 15px;">🌟 你兼具多种动物特质：</div>';
+                topAnimals.forEach(key => {
+                    html += `<p style="margin:8px 0"><strong>${animalData[key].emoji} ${animalData[key].name}</strong>：${animalData[key].description}</p>`;
+                });
+            }
+
+            html += '<div class="score-detail">';
+            html += `<span class="score-item">🐮 老黄牛 ${scores.ox}分</span>`;
+            html += `<span class="score-item">🦁 狮子 ${scores.lion}分</span>`;
+            html += `<span class="score-item">🦊 狐狸 ${scores.fox}分</span>`;
+            html += `<span class="score-item">🦉 猫头鹰 ${scores.owl}分</span>`;
+            html += '</div>';
+
+            resultContentDiv.innerHTML = html;
+        }
+
+        // 重置所有选项 + 恢复默认提示
+        function resetTest() {
+            const allRadios = document.querySelectorAll('input[type="radio"]');
+            allRadios.forEach(radio => radio.checked = false);
+            resultContentDiv.innerHTML = '🐾 完成5道题，点击“查看结果”看看你是哪种职场动物～';
+        }
+
+        // 绑定事件
+        testBtn.addEventListener('click', displayResult);
+        resetBtn.addEventListener('click', resetTest);
+
+        // 初始状态：封面显示，测试内容隐藏 (已在HTML中设置cover显示，testContent隐藏)
+    })();
+</script>
+</body>
+</html>
